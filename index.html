@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a CMO Vibe-Coded an AI Chief of Staff | Denis Elkin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: { bg: '#F8F9FB', accent: '#3B82F6' }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #F8F9FB; }
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .stat-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+    .stat-number { font-size: 2.25rem; font-weight: 800; color: #3B82F6; line-height: 1; }
+    .stat-label { font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem; }
+    .screenshot-frame { background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; }
+    .screenshot-frame img { width: 100%; display: block; }
+    .screenshot-placeholder { background: #F3F4F6; padding: 3rem 1rem; text-align: center; color: #9CA3AF; font-size: 0.875rem; }
+    .arch-box { background: white; border: 2px solid #E5E7EB; border-radius: 12px; padding: 1rem 1.25rem; text-align: center; font-weight: 600; font-size: 0.875rem; transition: border-color 0.3s; }
+    .arch-box:hover { border-color: #3B82F6; }
+    .step-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid #3B82F6; }
+    .section-footer { font-size: 0.75rem; color: #9CA3AF; text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #F3F4F6; }
+    .section-footer a { color: #9CA3AF; text-decoration: underline; }
+    .section-footer a:hover { color: #3B82F6; }
+    blockquote { border-left: 3px solid #3B82F6; padding-left: 1.25rem; font-style: italic; color: #374151; }
+    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #D1D5DB; transition: all 0.3s; cursor: pointer; }
+    .nav-dot.active { background: #3B82F6; transform: scale(1.4); }
+    .feature-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .feature-card-body { padding: 1.25rem; }
+    .fact-pill { display: inline-block; background: #EFF6FF; color: #1D4ED8; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+    .book-ref { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.8rem; }
+    .book-ref a { color: #92400E; text-decoration: underline; }
+    .evo-section { min-height: 70vh; display: flex; align-items: center; }
+  </style>
+</head>
+<body class="font-sans text-gray-800 antialiased">
+
+  <nav class="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-3" id="nav-dots">
+    <div class="nav-dot" data-section="hero" title="About me"></div>
+    <div class="nav-dot" data-section="problem" title="Problem"></div>
+    <div class="nav-dot" data-section="evo-v0" title="v0"></div>
+    <div class="nav-dot" data-section="evo-v1" title="v1"></div>
+    <div class="nav-dot" data-section="evo-v2" title="v2"></div>
+    <div class="nav-dot" data-section="evo-v3" title="v3"></div>
+    <div class="nav-dot" data-section="features" title="What it does"></div>
+    <div class="nav-dot" data-section="how" title="How it's built"></div>
+    <div class="nav-dot" data-section="thinking" title="Thinking Partner"></div>
+    <div class="nav-dot" data-section="reality" title="Reality"></div>
+    <div class="nav-dot" data-section="action" title="Your move"></div>
+  </nav>
+
+  <!-- ==================== 1. ABOUT ME ==================== -->
+  <section id="hero" class="min-h-screen flex items-center justify-center px-4 py-16">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="fade-in">
+        <p class="text-lg text-gray-400 mb-8 font-medium">Hegai Vibe-Coding Conf &middot; March 19, 2026</p>
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-8 text-gray-900">
+          How a CMO vibe-coded<br><span class="text-accent">an AI Chief of Staff</span>
+        </h1>
+      </div>
+
+      <div class="fade-in mt-8">
+        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm text-left max-w-2xl mx-auto">
+          <div class="font-bold text-lg mb-3">Denis Elkin</div>
+          <p class="text-gray-600 mb-2">CMO at Alps2Alps &mdash; Alpine ski & mountain transfer company. 350K+ passengers/year, strong YoY revenue growth.</p>
+          <p class="text-gray-600 mb-2">MIPT (physics & math). 15 years in marketing. Ex-inDrive, ex-Yango.</p>
+          <p class="text-gray-600 mb-2">Hegai community member since 2020.</p>
+          <p class="text-gray-600">Last time I wrote code professionally: ~15 years ago. Everything you'll see here was built with Claude Code and prompts.</p>
+        </div>
+      </div>
+
+      <div class="fade-in mt-12 grid grid-cols-2 md:grid-cols-5 gap-3 max-w-3xl mx-auto">
+        <div class="stat-card">
+          <div class="stat-number">200+</div>
+          <div class="stat-label">emails/day<br><span class="text-xs">3 accounts</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">people<br>on the team</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">parallel<br>projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">350K+</div>
+          <div class="stat-label">passengers<br>per year</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15yr</div>
+          <div class="stat-label">since last<br>coding</div>
+        </div>
+      </div>
+
+      <!-- What this talk is NOT about -->
+      <div class="fade-in mt-12 max-w-2xl mx-auto">
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-left">
+          <div class="font-bold mb-3 text-gray-500">What I'm NOT talking about today <span class="text-xs font-normal">(but also do)</span></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-400">
+            <div>&bull; AI in the company &mdash; Cursor, Claude for the team</div>
+            <div>&bull; AI in marketing &mdash; landing pages, video, creatives, copy</div>
+            <div>&bull; AI in analytics &mdash; BigQuery, dashboards, reports</div>
+            <div>&bull; AI in programming &mdash; code generation, reviews</div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-200">
+            <div class="font-bold text-gray-800">Today: one thing only &mdash; my <span class="text-accent">personal AI assistant</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- This is what it looks like — real session, preparing THIS talk -->
+      <div class="fade-in mt-12 max-w-4xl mx-auto">
+        <p class="text-sm font-semibold text-accent mb-4 text-center">This is what it looks like. Real session &mdash; preparing THIS talk.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div class="screenshot-frame">
+              <img src="img/claude-code-1.png" alt="Claude Code — MCP tools pulling Telegram data" />
+            </div>
+            <p class="text-xs text-gray-400 mt-2 text-center">AI reads my Telegram, finds the conference chat, pulls data via MCP tools</p>
+          </div>
+          <div>
+            <div class="screenshot-frame">
+              <img src="img/claude-code-2.png" alt="Claude Code — conference prep conversation" />
+            </div>
+            <p class="text-xs text-gray-400 mt-2 text-center">It found my abstract, organizer requests, and started planning the talk</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-footer fade-in">
+        <a href="https://t.me/denis_AMM">@denis_AMM</a> &middot; <a href="https://www.linkedin.com/in/denyolkin/">LinkedIn</a> &middot; denis.elkin@amitours.com
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2. THE PROBLEM ==================== -->
+  <section id="problem" class="min-h-[70vh] flex items-center px-4 py-20 bg-white">
+    <div class="max-w-3xl mx-auto">
+      <div class="fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold mb-8">The problem isn't time management. It's cognitive load.</h2>
+        <div class="space-y-4 text-gray-700 text-lg">
+          <p>I know GTD. I've read Dorofeev. I use Asana. I have a calendar. I'm not disorganized.</p>
+          <p>But: 200 emails across 3 inboxes. 10 people who each need something different. 5 projects running in parallel. Meetings back-to-back. Slack pinging. Invoices piling up.</p>
+          <p><strong>The frameworks I studied &mdash; Dorofeev, 4DX, Premortem &mdash; I knew them. I just couldn't apply them in the moment.</strong> Too many inputs. Too fast. The strategic thinking drowns in operational noise.</p>
+          <p>I needed something that remembers what I forget. That applies the right framework at the right time. That doesn't get tired.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3a. EVOLUTION: v0 ==================== -->
+  <section id="evo-v0" class="evo-section px-4 py-20">
+    <div class="max-w-3xl mx-auto">
+      <div class="fade-in">
+        <div class="fact-pill mb-4">v0 &mdash; Chaos</div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">20 ChatGPT tabs</h2>
+        <p class="text-gray-600 text-lg mb-6">Copy-pasting context between tabs. Lost prompts. Zero state between conversations. Every new chat starts from scratch. Writing the same "you are my assistant, here's what I need..." prompt every time.</p>
+        <p class="text-gray-500">This is where most people stop. "AI is cool but doesn't stick."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3b. EVOLUTION: v1 ==================== -->
+  <section id="evo-v1" class="evo-section px-4 py-20 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in">
+        <div class="fact-pill mb-4">v1 &mdash; Telegram Bot</div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">Voice message &rarr; task. Email draft in 10 seconds.</h2>
+        <p class="text-gray-600 text-lg mb-8">Built a Telegram bot with Claude API. First "holy shit, this works" moment: I dictate a task while driving, it lands in my inbox categorized and actionable. Draft an email reply by forwarding a message and saying "answer yes, we'll do it next week."</p>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="screenshot-frame">
+          <img src="img/telegram-bot.png" alt="Telegram bot" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Telegram bot conversation<br>Voice &rarr; task, email draft</div>'" />
+        </div>
+        <div>
+          <div class="bg-bg rounded-xl p-6">
+            <div class="font-bold mb-3">What v1 could do:</div>
+            <ul class="text-gray-600 text-sm space-y-2">
+              <li>&bull; Voice &rarr; transcribe &rarr; categorize (task/idea/note/question)</li>
+              <li>&bull; Draft emails from voice or text</li>
+              <li>&bull; Check inbox, summarize priorities</li>
+              <li>&bull; Quick Asana task creation</li>
+              <li>&bull; 11 forum topics (work email, personal, linkedin, career, projects, nutrition, thinking...)</li>
+            </ul>
+            <div class="mt-4 text-sm text-gray-400">5,200+ lines of Python. One person. Claude Code wrote the code, I described what I needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3c. EVOLUTION: v2 ==================== -->
+  <section id="evo-v2" class="evo-section px-4 py-20">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in">
+        <div class="fact-pill mb-4">v2 &mdash; Claude Code + CLAUDE.md</div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">The prompt matters more than the code.</h2>
+        <p class="text-gray-600 text-lg mb-8">Discovered Claude Code &mdash; an AI that lives in the terminal, reads your entire codebase, and writes code from conversation. But the real breakthrough was CLAUDE.md: a file that defines how the system should behave. Not features &mdash; personality, guardrails, thinking patterns.</p>
+      </div>
+
+      <div class="fade-in">
+        <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+          <div class="font-bold mb-3">What CLAUDE.md defines:</div>
+          <ul class="text-gray-600 text-sm space-y-2">
+            <li>&bull; <strong>Tone:</strong> "Direct, no corporate speak. Honest even when uncomfortable."</li>
+            <li>&bull; <strong>Security:</strong> "NEVER send emails without my approval. Draft everything."</li>
+            <li>&bull; <strong>Thinking:</strong> "Interview before output. Ask one question at a time."</li>
+            <li>&bull; <strong>Content:</strong> "Preserve my meaning exactly. Never add claims I didn't make."</li>
+            <li>&bull; <strong>Quality:</strong> "Stress-test every output in 3 rounds before showing me."</li>
+            <li>&bull; <strong>Tasks:</strong> "Dorofeev: every task starts with a verb, first physical action."</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 3d. EVOLUTION: v3 ==================== -->
+  <section id="evo-v3" class="evo-section px-4 py-20 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in">
+        <div class="fact-pill mb-4">v3 &mdash; React Dashboard</div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">8 pages. Everything in one place.</h2>
+        <p class="text-gray-600 text-lg mb-8">Needed to see everything at once. Built a React dashboard &mdash; again, vibe-coded with Claude Code. Unified inbox, team, finance, meetings, calendar, tasks, search. Same brain, visual interface.</p>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="screenshot-frame">
+          <img src="img/processing.png" alt="Processing page" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Processing page<br>Unified inbox with AI prioritization</div>'" />
+        </div>
+        <div class="screenshot-frame">
+          <img src="img/team.png" alt="Team page" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Team page<br>People cards + 1:1 prep</div>'" />
+        </div>
+      </div>
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="screenshot-frame">
+          <img src="img/finance.png" alt="Finance page" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Finance page<br>Invoice processing</div>'" />
+        </div>
+        <div class="screenshot-frame">
+          <img src="img/meetings.png" alt="Meetings page" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Meetings page<br>Transcripts &rarr; action items</div>'" />
+        </div>
+      </div>
+
+      <div class="fade-in mt-8 grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div class="stat-card">
+          <div class="stat-number text-xl">5,200+</div>
+          <div class="stat-label">lines of bot</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number text-xl">20</div>
+          <div class="stat-label">skill modules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number text-xl">77</div>
+          <div class="stat-label">connected tools</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number text-xl">19</div>
+          <div class="stat-label">background<br>processes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number text-xl">2</div>
+          <div class="stat-label">servers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4. WHAT IT DOES ==================== -->
+  <section id="features" class="px-4 py-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2">What it actually does</h2>
+        <p class="text-gray-500 mb-4">Same brain, three interfaces: Telegram, Claude Code/Cursor, Dashboard.</p>
+        <p class="text-gray-500 mb-12">77 tools across 14 categories: Gmail, Calendar, Asana, Slack, Google Docs/Sheets/Drive/Slides, Telegram, BigQuery, Ultrahuman, tl;dv, personal tasks.</p>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/processing.png" alt="Processing" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Processing page</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold text-lg mb-1">Unified Inbox</div>
+            <p class="text-gray-500 text-sm">3 email accounts + Slack in one feed. AI assigns priority, category, suggested action. 19 background schedulers: email checks, Asana inbox, Slack mentions, meeting transcripts, marketing reports, morning briefings, PR/commit notifications &mdash; all on autopilot.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/team.png" alt="Team cards" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Team page</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold text-lg mb-1">Team Cards + 1:1 Prep</div>
+            <p class="text-gray-500 text-sm">A card per person: notes, open commitments from meetings, follow-up status. Before every 1:1 the system generates a Dorofeev-style brief: what they promised, what's overdue, what to ask. People started delivering &mdash; they knew I'd follow up.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/finance.png" alt="Finance" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Finance page</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold text-lg mb-1">Invoice Processing</div>
+            <p class="text-gray-500 text-sm">Invoices arrive by email. Auto-extracted from attachments, categorized by vendor/type, filed. Monthly totals auto-calculated. No more digging through Gmail for "that invoice from last Tuesday."</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/meetings.png" alt="Meetings" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Meetings page</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold text-lg mb-1">Meeting Follow-ups</div>
+            <p class="text-gray-500 text-sm">tl;dv records meetings. Transcripts pulled automatically via API, analyzed, commitments extracted per person, reminders sent. The "I forgot what I promised" problem &mdash; gone.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/claude-code-2.png" alt="Claude Code" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Claude Code session</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold text-lg mb-1">Voice &rarr; Action pipeline</div>
+            <p class="text-gray-500 text-sm">7am, driving. Voice message in Telegram: "remind me to send the Q2 budget to finance by Thursday." Transcribed, categorized as task, Dorofeev-reformulated ("Open budget spreadsheet and fill in paid search row"), deadline set, added to task system. 10 seconds.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/claude-code-1.png" alt="Claude Code terminal" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Claude Code terminal</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold text-lg mb-1">Claude Code &mdash; where the real work happens</div>
+            <p class="text-gray-500 text-sm">Terminal. Same 77 tools. Full codebase context. Build features, debug, think through decisions, write content, run market research. Also works with Cursor (same CLAUDE.md, same skills).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Beyond work header -->
+      <div class="fade-in mt-8 mb-6">
+        <h3 class="text-xl font-bold">Beyond work</h3>
+        <p class="text-gray-500 text-sm">Same system, personal life. It's not just a work tool.</p>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/glucose.png" alt="Glucose" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Glucose data</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold mb-1">Nutrition & glucose</div>
+            <p class="text-gray-500 text-sm">Ultrahuman CGM connected via API. Tracks glucose response per meal. Spots patterns across weeks. Tells me "rice spikes you harder than pasta" with actual data. Dedicated Telegram topic for nutrition.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/training.png" alt="Sports" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Training / sports data</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold mb-1">Sports & training</div>
+            <p class="text-gray-500 text-sm">Wakeboarding, sailing, paddle, skiing. Tracks sessions, connects to glucose/nutrition data, helps plan training around travel schedule.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/linkedin.png" alt="Content" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: LinkedIn post</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold mb-1">Content</div>
+            <p class="text-gray-500 text-sm">LinkedIn, Telegram channel, conference pitches. Copywriting-audit skill checks tone. In my voice, not a template.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/books.png" alt="Books" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Book processing</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold mb-1">Books & Learning</div>
+            <p class="text-gray-500 text-sm">Highlighted pages &rarr; extracted insights &rarr; connected to goals. Dorofeev, 4DX, Atomic Habits, AI-Driven Leader.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="screenshot-frame">
+            <img src="img/career.png" alt="Career" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: Career planning</div>'" />
+          </div>
+          <div class="feature-card-body">
+            <div class="font-bold mb-1">Career & personal dev</div>
+            <p class="text-gray-500 text-sm">Dedicated Telegram topics: career, side projects, thinking. Thinking journal with decision log. Tracks open questions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-footer fade-in">
+        <a href="https://t.me/denis_AMM">@denis_AMM</a> &middot; <a href="https://www.linkedin.com/in/denyolkin/">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. HOW IT'S BUILT (BIGGEST SECTION) ==================== -->
+  <section id="how" class="px-4 py-20 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2">How it's built</h2>
+        <p class="text-gray-500 mb-12">The code is scaffolding. The prompt is the product. Here's what that actually means.</p>
+      </div>
+
+      <!-- The brief -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">How I described what I'm building</h3>
+        <div class="bg-bg rounded-2xl p-6 md:p-8">
+          <div class="text-sm font-semibold text-accent mb-4">THE ACTUAL BRIEF TO CLAUDE CODE</div>
+          <div class="space-y-3 text-gray-700">
+            <p><strong>Build me a personal assistant. Not a chatbot. A chief of staff who knows me.</strong></p>
+            <p>Knows my email rules &mdash; which emails are urgent, which can wait, which are spam. Across 3 inboxes. Drafts replies in my tone.</p>
+            <p>Knows my team &mdash; who's working on what, what they promised in meetings. Prepares me for every 1:1.</p>
+            <p>Knows my thinking frameworks &mdash; Dorofeev, 4DX, Premortem. Applies them BEFORE I ask. Interrupts me when I'm being vague.</p>
+            <p>Knows my content voice &mdash; LinkedIn posts, conference pitches, emails that sound like me.</p>
+            <p>Never sends anything without my approval &mdash; drafts everything, I press send.</p>
+            <p>Works everywhere &mdash; Telegram at 7am, Claude Code at my desk, Dashboard for the full picture.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-6">Architecture</h3>
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-center max-w-3xl mx-auto">
+          <div class="space-y-3">
+            <div class="arch-box border-accent"><div class="text-xs text-gray-400 mb-1">3 Interfaces</div>Telegram bot</div>
+            <div class="arch-box border-accent">Claude Code</div>
+            <div class="arch-box border-accent">React Dashboard (8 pages)</div>
+          </div>
+          <div class="hidden md:flex text-accent text-2xl justify-center">&rarr;</div>
+          <div>
+            <div class="arch-box border-accent bg-blue-50">
+              <div class="text-xs text-accent mb-1">Brain</div>
+              <div class="text-lg">CLAUDE.md + 20 Skills</div>
+              <div class="text-xs text-gray-500 mt-1">Behavior rules, frameworks, guardrails</div>
+            </div>
+            <div class="mt-3"><div class="arch-box"><div class="text-xs text-gray-400 mb-1">Security</div>Auth Proxy (VPC)</div></div>
+          </div>
+          <div class="hidden md:flex text-accent text-2xl justify-center">&rarr;</div>
+          <div class="space-y-3">
+            <div class="arch-box"><div class="text-xs text-gray-400 mb-1">77 tools, 14 categories</div>Gmail &middot; Calendar &middot; Asana</div>
+            <div class="arch-box">Slack &middot; Google Docs/Sheets/Drive</div>
+            <div class="arch-box">BigQuery &middot; Ultrahuman &middot; tl;dv</div>
+          </div>
+        </div>
+        <div class="text-center mt-4 text-sm text-gray-400">2 servers &middot; 19 background schedulers &middot; 11 bot commands &middot; 11 forum topics &middot; $10-20/mo infra</div>
+      </div>
+
+      <!-- CLAUDE.md screenshot -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">CLAUDE.md &mdash; the brain</h3>
+        <p class="text-gray-600 text-sm mb-4">Not a config file. An operating philosophy. Defines personality, security rules, thinking patterns, content style, task methodology, quality standards. The same file works across Telegram bot, Claude Code, Cursor, and Dashboard.</p>
+        <div class="screenshot-frame max-w-2xl mx-auto">
+          <img src="img/claudemd-fragment.png" alt="CLAUDE.md" onerror="this.outerHTML='<div class=\'screenshot-placeholder\'>Screenshot: CLAUDE.md fragment<br>The actual file from the repo</div>'" />
+        </div>
+      </div>
+
+      <!-- Plan-Critique: 3-role review -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">Every plan gets attacked 3 times before I see it</h3>
+        <p class="text-gray-600 text-sm mb-6">I told the AI: "Before showing me any plan, critique it yourself in 3 rounds. Different role each time. I only see the final version after all 3 attacks."</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-bg rounded-xl p-5 border-t-4 border-red-400">
+            <div class="fact-pill mb-3">Round 1</div>
+            <div class="font-bold mb-1">Senior Software Architect</div>
+            <p class="text-gray-500 text-sm">Attacks: API contracts, data flow, race conditions, backward compatibility, deploy order, performance bottlenecks.</p>
+          </div>
+          <div class="bg-bg rounded-xl p-5 border-t-4 border-yellow-400">
+            <div class="fact-pill mb-3">Round 2</div>
+            <div class="font-bold mb-1">Senior Product Manager</div>
+            <p class="text-gray-500 text-sm">Attacks: Does it solve the problem? Simplest solution? Scope creep? User experience? Is it testable?</p>
+          </div>
+          <div class="bg-bg rounded-xl p-5 border-t-4 border-green-400">
+            <div class="fact-pill mb-3">Round 3</div>
+            <div class="font-bold mb-1">Domain Stakeholder</div>
+            <p class="text-gray-500 text-sm">Role depends on context: accountant for finance features, team member for team features, attacker for security. Different every time.</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-3 text-center">If a round finds zero real issues (not cosmetic), remaining rounds are skipped.</p>
+      </div>
+
+      <!-- Stress-test -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">Stress-test: every output gets attacked too</h3>
+        <p class="text-gray-600 text-sm mb-4">Not just plans &mdash; every proposal, diagnosis, strategy, analysis, code. Three rounds: propose &rarr; find real flaws &rarr; fix. Key rule: <strong>testable claims = actually test them</strong> (run curl, grep, read docs, execute code). Reasoning about testable facts is lazy.</p>
+        <p class="text-gray-500 text-xs">This applies silently by default. I can also invoke it explicitly with "/stress-test" to see all 3 rounds.</p>
+      </div>
+
+      <!-- 20 Skills -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">20 skill modules</h3>
+        <p class="text-gray-600 text-sm mb-6">Each skill is a separate instruction file. The AI loads the right one based on what I'm doing. Not prompts I type &mdash; files in the repo that activate automatically.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">thinking-partner</div><div class="text-xs text-gray-400">11 decision frameworks</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">stress-test</div><div class="text-xs text-gray-400">3-round quality attack</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">plan-critique</div><div class="text-xs text-gray-400">3-role silent review</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">synthetic-market-research</div><div class="text-xs text-gray-400">LLM personas + SSR, 90% accuracy</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">conference-pitching</div><div class="text-xs text-gray-400">CFP + speaker pitches</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">copywriting-audit</div><div class="text-xs text-gray-400">kills corporate speak</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">meetings</div><div class="text-xs text-gray-400">transcript &rarr; actions + commitments</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">context-switch</div><div class="text-xs text-gray-400">work mode / personal mode</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">session-checkpoint</div><div class="text-xs text-gray-400">save/resume long conversations</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">voice-memos</div><div class="text-xs text-gray-400">voice &rarr; categorized task</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">book-reading</div><div class="text-xs text-gray-400">page photo &rarr; highlights &rarr; tasks</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">morning-routine</div><div class="text-xs text-gray-400">daily briefing: calendar + priorities</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">youtube-processor</div><div class="text-xs text-gray-400">video &rarr; key ideas extraction</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">monthly-newsletter</div><div class="text-xs text-gray-400">auto-digest from team data</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">slack-message</div><div class="text-xs text-gray-400">structured Slack comms</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">telegram</div><div class="text-xs text-gray-400">channel digest parsing</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">testing-methodology</div><div class="text-xs text-gray-400">test strategy for every change</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">pet-app-factory</div><div class="text-xs text-gray-400">side project prototyping</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">pdf-stamp</div><div class="text-xs text-gray-400">document processing</div></div>
+          <div class="bg-bg rounded-lg p-3"><div class="font-semibold text-sm">whatsapp</div><div class="text-xs text-gray-400">message integration</div></div>
+        </div>
+      </div>
+
+      <!-- Security -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">Security: Auth Proxy on VPC</h3>
+        <p class="text-gray-600 text-sm mb-2">All API keys (Gmail, Asana, Slack, Google, tl;dv, Ultrahuman) sit behind a dedicated auth proxy on a private VPC network. The AI never sees raw credentials. Two servers: bot server (public-facing) and auth proxy (VPC only, no public access). Every tool call goes through the proxy with a Bearer token.</p>
+        <p class="text-gray-500 text-xs">Why not just put keys in .env? Because the bot processes user messages, and prompt injection is real. The proxy validates every request before forwarding.</p>
+      </div>
+
+      <!-- Unit tests + code review -->
+      <div class="fade-in mb-12">
+        <h3 class="text-xl font-bold mb-4">Tests, code review, deploy safety</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-bg rounded-xl p-5">
+            <div class="font-bold mb-2">Unit tests + edge cases</div>
+            <p class="text-gray-600 text-sm">Every non-trivial change gets a test strategy (testing-methodology skill). The AI writes tests, runs them, fixes failures before showing me the result.</p>
+          </div>
+          <div class="bg-bg rounded-xl p-5">
+            <div class="font-bold mb-2">Multi-role code review</div>
+            <p class="text-gray-600 text-sm">Before deploy: code gets reviewed as senior dev (correctness), security auditor (vulnerabilities), and PM (does it solve the right problem).</p>
+          </div>
+          <div class="bg-bg rounded-xl p-5">
+            <div class="font-bold mb-2">Deploy skill</div>
+            <p class="text-gray-600 text-sm">Never manual git push. A /deploy skill runs: lint, tests, review, commit, push, SSH to server, restart service. One command.</p>
+          </div>
+          <div class="bg-bg rounded-xl p-5">
+            <div class="font-bold mb-2">19 background schedulers</div>
+            <p class="text-gray-600 text-sm">Email checks (3 accounts), Asana inbox, Slack mentions, meeting transcripts, task reminders, morning briefing, marketing reports, health checks, cache refresh, PR notifications, proactive alerts (stale tasks, calendar overload).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Synthetic Market Research -->
+      <div class="fade-in mb-8">
+        <h3 class="text-xl font-bold mb-4">Bonus: synthetic market research</h3>
+        <p class="text-gray-600 text-sm mb-2">One of the 20 skills. LLM generates demographic personas matching target market, role-plays their reaction to a product concept, then scores responses using Semantic Similarity Rating. <strong>90% correlation with real survey data</strong> (validated by PyMC Labs across 57 consumer surveys). $0 per respondent. Results in minutes, not weeks.</p>
+        <p class="text-gray-500 text-xs">Three modes: interactive (step by step), quick (5 personas, instant), comparative (A/B test variants).</p>
+      </div>
+
+      <div class="section-footer fade-in">
+        <a href="https://t.me/denis_AMM">@denis_AMM</a> &middot; <a href="https://www.linkedin.com/in/denyolkin/">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6. THINKING PARTNER ==================== -->
+  <section id="thinking" class="px-4 py-20">
+    <div class="max-w-4xl mx-auto">
+      <div class="fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold mb-2">Thinking Partner</h2>
+        <p class="text-gray-500 mb-4">The AI doesn't give answers. It asks the right questions. Applies frameworks I studied but forgot in the daily grind.</p>
+        <p class="text-gray-500 mb-12">Rule #1: <strong>"INTERVIEW BEFORE OUTPUT &mdash; never give recommendations until you've interviewed Denis. Ask ONE question at a time."</strong></p>
+      </div>
+
+      <div class="fade-in mb-8">
+        <h3 class="text-xl font-bold mb-4">11 thinking frameworks, loaded from one file</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Dorofeev "Jedi Techniques"</div>
+            <p class="text-gray-500 text-xs">"What's the first physical action?" Tasks start with a verb. Banned: "think about", "analyze", "figure out". WIP limit: 5 active tasks.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">4DX (McChesney)</div>
+            <p class="text-gray-500 text-xs">One WIG: "From X to Y by When." Lead measures (actions I control weekly) vs. lag measures (results). Whirlwind = everything else.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Descartes Square</div>
+            <p class="text-gray-500 text-xs">4 quadrants: what happens if I do / don't? What WON'T happen if I do / don't? Breaks binary paralysis.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Stakeholder Simulation</div>
+            <p class="text-gray-500 text-xs">AI role-plays my CEO, a team member, a partner &mdash; predicts their reaction before I act.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Board Simulation</div>
+            <p class="text-gray-500 text-xs">3-4 personas debate a decision from different angles. I watch, pick strongest arguments.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Strategic Deep Dive (CRIT)</div>
+            <p class="text-gray-500 text-xs">Big decisions: structured walk-through of context, risks, implications, tradeoffs.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Second-Order Consequences</div>
+            <p class="text-gray-500 text-xs">What happens after the thing happens? Ripple effects beyond the obvious first outcome.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Competitive/Adversarial</div>
+            <p class="text-gray-500 text-xs">Tests strategy from competitor's eyes. "What would they do if they saw this?"</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Risk Identification</div>
+            <p class="text-gray-500 text-xs">Probability &times; severity &times; reversibility matrix. Forces ranking, not just listing.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Vital 20% Audit</div>
+            <p class="text-gray-500 text-xs">When overwhelmed: which 20% of activities drive 80% of results? Cut everything else.</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="font-bold text-sm mb-1">Decision Forcing</div>
+            <p class="text-gray-500 text-xs">Breaks analysis paralysis. "You must decide by end of this conversation."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Where frameworks come from -->
+      <div class="fade-in mb-8">
+        <h3 class="text-lg font-semibold mb-4">Where the frameworks come from</h3>
+        <div class="space-y-3">
+          <div class="book-ref">
+            <strong>Maxim Dorofeev</strong> &mdash; <a href="https://www.mann-ivanov-ferber.ru/books/dzhedajskie-texniki/" target="_blank">"Jedi Techniques"</a> (Джедайские техники), 7th ed., 2025, MIF. Task clarity, monkey-readable actions, WIP limits. Built on Kahneman, David Allen, Goldratt, Taleb.
+          </div>
+          <div class="book-ref">
+            <strong>McChesney, Covey, Huling</strong> &mdash; <a href="https://www.amazon.com/Disciplines-Execution-Achieving-Wildly-Important/dp/1451627068" target="_blank">"The 4 Disciplines of Execution"</a>. WIG, lead measures, scoreboard, cadence of accountability.
+          </div>
+          <div class="book-ref">
+            <strong>Geoff Woods</strong> &mdash; <a href="https://www.amazon.com/AI-Driven-Leader-Harness-Achieve-Breakthrough/dp/0593727673" target="_blank">"The AI-Driven Leader"</a>. The idea that AI should be a thinking partner, not a task executor. Integrated Feb 2026.
+          </div>
+          <div class="book-ref">
+            <strong>James Clear</strong> &mdash; <a href="https://www.amazon.com/Atomic-Habits-Proven-Build-Break/dp/0735211299" target="_blank">"Atomic Habits"</a>. Identity-based habits, 1% improvement loops.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-footer fade-in">
+        <a href="https://t.me/denis_AMM">@denis_AMM</a> &middot; <a href="https://www.linkedin.com/in/denyolkin/">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 7. REALITY ==================== -->
+  <section id="reality" class="px-4 py-20 bg-white">
+    <div class="max-w-3xl mx-auto">
+      <div class="fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold mb-12">Failures + real cost</h2>
+      </div>
+
+      <div class="fade-in space-y-6 mb-12">
+        <div class="bg-bg rounded-xl p-6">
+          <div class="font-semibold mb-2">The meta-fail</div>
+          <p class="text-gray-600">The abstract for this conference was sent by the bot. It signed off "P.S. from Denis's AI assistant." The organizers wrote my last name wrong and credited OpenClaw. The bot knows my name better than the humans.</p>
+        </div>
+
+        <div class="bg-bg rounded-xl p-6">
+          <div class="font-semibold mb-2">This presentation</div>
+          <p class="text-gray-600">This website was built by the same system. Claude Code + one HTML file + Tailwind CDN. Vibe-coded at a vibe-coding conference.</p>
+        </div>
+
+        <div class="bg-bg rounded-xl p-6">
+          <div class="font-semibold mb-2">We're rolling AI out company-wide</div>
+          <p class="text-gray-600">But that's Seva's talk, not mine.</p>
+        </div>
+
+        <div class="bg-bg rounded-xl p-6" id="stories-placeholder">
+          <div class="font-semibold mb-2">What went wrong</div>
+          <p class="text-gray-600 italic text-sm">[Denis's failure stories &mdash; to be added]</p>
+        </div>
+      </div>
+
+      <div class="fade-in">
+        <h3 class="text-lg font-semibold mb-4">Real cost</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="stat-card">
+            <div class="stat-number text-2xl">Claude Max</div>
+            <div class="stat-label">subscription</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number text-2xl">$10-20</div>
+            <div class="stat-label">per month, 2 DigitalOcean droplets</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number text-2xl">???</div>
+            <div class="stat-label">hours to build<br><span class="text-xs">(every hour you learn)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-footer fade-in">
+        <a href="https://t.me/denis_AMM">@denis_AMM</a> &middot; <a href="https://www.linkedin.com/in/denyolkin/">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 8. YOUR MOVE ==================== -->
+  <section id="action" class="px-4 py-20">
+    <div class="max-w-3xl mx-auto">
+      <div class="fade-in">
+        <blockquote class="text-xl md:text-2xl font-medium mb-12">
+          The best thing my AI assistant does is not email triage or task management. It reminds me to think when everything around screams "just react."
+        </blockquote>
+      </div>
+
+      <div class="fade-in">
+        <h2 class="text-2xl md:text-4xl font-bold mb-8">Three steps tonight</h2>
+        <div class="space-y-4">
+          <div class="step-card">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl font-extrabold text-accent shrink-0">1</div>
+              <div>
+                <div class="font-semibold mb-1">Write one page of rules</div>
+                <p class="text-gray-600 text-sm">How your AI should behave. Tone, boundaries, what it must never do. That's your CLAUDE.md.</p>
+              </div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl font-extrabold text-accent shrink-0">2</div>
+              <div>
+                <div class="font-semibold mb-1">Pick ONE workflow</div>
+                <p class="text-gray-600 text-sm">The one eating the most time. Email triage, meeting follow-ups, task sorting &mdash; one.</p>
+              </div>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="flex items-start gap-4">
+              <div class="text-3xl font-extrabold text-accent shrink-0">3</div>
+              <div>
+                <div class="font-semibold mb-1">Build it this weekend</div>
+                <p class="text-gray-600 text-sm">Claude Code or Cursor. Your rules doc as foundation. One workflow. Production in 2 days.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-in mt-16 text-center">
+        <div class="bg-white rounded-2xl p-8 shadow-sm max-w-2xl mx-auto">
+          <p class="text-lg md:text-xl font-medium text-gray-700 mb-4">
+            A CMO who last coded 15 years ago built an AI chief of staff that manages email, tracks team commitments, and helps think strategically.
+          </p>
+          <p class="text-gray-500">If I could &mdash; so can you.</p>
+        </div>
+      </div>
+
+      <div class="fade-in mt-12 text-center">
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="https://t.me/denis_AMM" class="bg-white px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition font-medium text-gray-700 hover:text-accent">Telegram @denis_AMM</a>
+          <a href="https://www.linkedin.com/in/denyolkin/" class="bg-white px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition font-medium text-gray-700 hover:text-accent">LinkedIn</a>
+        </div>
+        <p class="text-sm text-gray-400 mt-4">denis.elkin@amitours.com</p>
+      </div>
+
+      <div class="section-footer fade-in">
+        <p class="font-medium text-gray-500">Denis Elkin &middot; CMO, Alps2Alps &middot; Hegai Vibe-Coding Conf 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('section[id]');
+    const dots = document.querySelectorAll('.nav-dot');
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const target = document.getElementById(dot.dataset.section);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          dots.forEach(d => d.classList.remove('active'));
+          const dot = document.querySelector(`.nav-dot[data-section="${entry.target.id}"]`);
+          if (dot) dot.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => navObserver.observe(s));
+  </script>
+</body>
+</html>
