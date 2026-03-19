@@ -36,8 +36,9 @@
     .section-footer a { color: #9CA3AF; text-decoration: underline; }
     .section-footer a:hover { color: #3B82F6; }
     blockquote { border-left: 3px solid #3B82F6; padding-left: 1.25rem; font-style: italic; color: #374151; }
-    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #D1D5DB; transition: all 0.3s; cursor: pointer; }
-    .nav-dot.active { background: #3B82F6; transform: scale(1.4); }
+    .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: #9CA3AF; transition: all 0.3s; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .nav-dot:hover { background: #6B7280; }
+    .nav-dot.active { background: #3B82F6; transform: scale(1.4); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
     .feature-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
     .feature-card-body { padding: 1.25rem; }
     .fact-pill { display: inline-block; background: #EFF6FF; color: #1D4ED8; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; }
@@ -48,7 +49,7 @@
 </head>
 <body class="font-sans text-gray-800 antialiased">
 
-  <nav class="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-3" id="nav-dots">
+  <nav class="fixed right-8 top-1/2 -translate-y-1/2 z-[9999] hidden md:flex flex-col gap-3" id="nav-dots">
     <div class="nav-dot" data-section="hero" title="About me"></div>
     <div class="nav-dot" data-section="problem" title="Problem"></div>
     <div class="nav-dot" data-section="evo-v0" title="v0"></div>
